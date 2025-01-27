@@ -12,17 +12,17 @@ fn simulate_key_sequence(hold_key: Key, sequence_keys: &[char]) {
 
     // 按下并保持第一个键
     enigo.key_down(hold_key);
-    // thread::sleep(Duration::from_millis(100));
+    thread::sleep(Duration::from_millis(100));
 
     // 依次点击序列中的其他键
     for &key in sequence_keys {
         enigo.key_click(Key::Layout(key));
-        // thread::sleep(Duration::from_millis(100));
+        thread::sleep(Duration::from_millis(50));
     }
 
     // 释放第一个键
     enigo.key_up(hold_key);
-    // thread::sleep(Duration::from_millis(100));
+    thread::sleep(Duration::from_millis(100));
 }
 
 /// 定义一个热键配置结构
@@ -120,10 +120,10 @@ fn main() {
         },
         // 飞鹰凝固汽油弹
         HotkeyConfig {
-            trigger_keys: vec![Keycode::LControl, Keycode::W],
+            trigger_keys: vec![Keycode::LControl, Keycode::Key4],
             hold_key: Key::Control,
             sequence_keys: vec!['w', 'd', 's', 'w'],
-            description: String::from("飞鹰凝固汽油弹 (Ctrl+W)"),
+            description: String::from("飞鹰凝固汽油弹 (Ctrl+4)"),
         },
         // 飞鹰110MM火箭巢
         HotkeyConfig {
