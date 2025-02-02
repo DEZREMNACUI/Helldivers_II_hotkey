@@ -3,11 +3,11 @@ use enigo::{Enigo, Key, KeyboardControllable};
 use std::{collections::HashSet, thread, time::Duration};
 
 /// 模拟按键序列：保持一个键按下的同时按下其他键
-fn simulate_key_sequence(hold_key: Key, sequence_keys: &[char]) {
+fn simulate_key_sequence(hold_key: Key, sequence_keys: &[Key]) {
     let mut enigo = Enigo::new();
 
     // 确保之前的按键都已释放
-    enigo.key_up(hold_key);
+    // enigo.key_up(hold_key);
     thread::sleep(Duration::from_millis(100));
 
     // 按下并保持第一个键
@@ -16,8 +16,8 @@ fn simulate_key_sequence(hold_key: Key, sequence_keys: &[char]) {
 
     // 依次点击序列中的其他键
     for &key in sequence_keys {
-        enigo.key_click(Key::Layout(key));
-        thread::sleep(Duration::from_millis(50));
+        enigo.key_click(key);
+        thread::sleep(Duration::from_millis(100));
     }
 
     // 释放第一个键
@@ -29,7 +29,7 @@ fn simulate_key_sequence(hold_key: Key, sequence_keys: &[char]) {
 struct HotkeyConfig {
     trigger_keys: Vec<Keycode>,
     hold_key: Key,
-    sequence_keys: Vec<char>,
+    sequence_keys: Vec<Key>,
     description: String,
 }
 
@@ -93,72 +93,113 @@ fn main() {
         // 飞鹰空袭
         HotkeyConfig {
             trigger_keys: vec![Keycode::LControl, Keycode::Key1],
-            hold_key: Key::Control,
-            sequence_keys: vec!['w', 'd', 's', 'd'],
+            hold_key: Key::Space,
+            sequence_keys: vec![
+                Key::UpArrow,
+                Key::RightArrow,
+                Key::DownArrow,
+                Key::RightArrow,
+            ],
             description: String::from("飞鹰空袭 (Ctrl+1)"),
         },
         // 飞鹰集束炸弹
         HotkeyConfig {
             trigger_keys: vec![Keycode::LControl, Keycode::Key2],
-            hold_key: Key::Control,
-            sequence_keys: vec!['w', 'd', 's', 's', 'd'],
+            hold_key: Key::Space,
+            sequence_keys: vec![
+                Key::UpArrow,
+                Key::RightArrow,
+                Key::DownArrow,
+                Key::DownArrow,
+                Key::RightArrow,
+            ],
             description: String::from("飞鹰集束炸弹 (Ctrl+2)"),
         },
         // 飞鹰500kg炸弹
         HotkeyConfig {
             trigger_keys: vec![Keycode::LControl, Keycode::Key3],
-            hold_key: Key::Control,
-            sequence_keys: vec!['w', 'd', 's', 's', 's'],
+            hold_key: Key::Space,
+            sequence_keys: vec![
+                Key::UpArrow,
+                Key::RightArrow,
+                Key::DownArrow,
+                Key::DownArrow,
+                Key::DownArrow,
+            ],
             description: String::from("飞鹰500kg炸弹 (Ctrl+3)"),
         },
         // 飞鹰机枪扫射
         HotkeyConfig {
-            trigger_keys: vec![Keycode::LControl, Keycode::Q],
-            hold_key: Key::Control,
-            sequence_keys: vec!['w', 'd', 'd'],
-            description: String::from("飞鹰机枪扫射 (Ctrl+Q)"),
+            trigger_keys: vec![Keycode::LControl, Keycode::Key4],
+            hold_key: Key::Space,
+            sequence_keys: vec![Key::UpArrow, Key::RightArrow, Key::RightArrow],
+            description: String::from("飞鹰机枪扫射 (Ctrl+4)"),
         },
         // 飞鹰凝固汽油弹
         HotkeyConfig {
-            trigger_keys: vec![Keycode::LControl, Keycode::Key4],
-            hold_key: Key::Control,
-            sequence_keys: vec!['w', 'd', 's', 'w'],
+            trigger_keys: vec![Keycode::LControl, Keycode::Q],
+            hold_key: Key::Space,
+            sequence_keys: vec![Key::UpArrow, Key::RightArrow, Key::DownArrow, Key::UpArrow],
             description: String::from("飞鹰凝固汽油弹 (Ctrl+4)"),
         },
         // 飞鹰110MM火箭巢
         HotkeyConfig {
             trigger_keys: vec![Keycode::LControl, Keycode::E],
-            hold_key: Key::Control,
-            sequence_keys: vec!['w', 'd', 'w', 'a'],
+            hold_key: Key::Space,
+            sequence_keys: vec![Key::UpArrow, Key::RightArrow, Key::UpArrow, Key::LeftArrow],
             description: String::from("飞鹰110MM火箭巢 (Ctrl+E)"),
         },
 
         // 加特林炮台
         HotkeyConfig {
             trigger_keys: vec![Keycode::LShift, Keycode::Key1],
-            hold_key: Key::Control,
-            sequence_keys: vec!['s', 'w', 'd', 'a'],
+            hold_key: Key::Space,
+            sequence_keys: vec![
+                Key::DownArrow,
+                Key::UpArrow,
+                Key::RightArrow,
+                Key::LeftArrow,
+            ],
             description: String::from("加特林炮台 (Shift+1)"),
         },
         // 自动哨戒炮
         HotkeyConfig {
             trigger_keys: vec![Keycode::LShift, Keycode::Key2],
-            hold_key: Key::Control,
-            sequence_keys: vec!['s', 'w', 'd', 'w', 'a', 'w'],
+            hold_key: Key::Space,
+            sequence_keys: vec![
+                Key::DownArrow,
+                Key::UpArrow,
+                Key::RightArrow,
+                Key::UpArrow,
+                Key::LeftArrow,
+                Key::UpArrow,
+            ],
             description: String::from("自动哨戒炮 (Shift+2)"),
         },
         // 火箭哨戒炮
         HotkeyConfig {
             trigger_keys: vec![Keycode::LShift, Keycode::Key3],
-            hold_key: Key::Control,
-            sequence_keys: vec!['s', 'w', 'd', 'd', 'a'],
+            hold_key: Key::Space,
+            sequence_keys: vec![
+                Key::DownArrow,
+                Key::UpArrow,
+                Key::RightArrow,
+                Key::RightArrow,
+                Key::LeftArrow,
+            ],
             description: String::from("火箭哨戒炮 (Shift+3)"),
         },
         // 迫击炮
         HotkeyConfig {
             trigger_keys: vec![Keycode::LShift, Keycode::Q],
-            hold_key: Key::Control,
-            sequence_keys: vec!['s', 'w', 'd', 'd', 's'],
+            hold_key: Key::Space,
+            sequence_keys: vec![
+                Key::DownArrow,
+                Key::UpArrow,
+                Key::RightArrow,
+                Key::RightArrow,
+                Key::DownArrow,
+            ],
             description: String::from("迫击炮 (Shift+Q)"),
         },
     ];
